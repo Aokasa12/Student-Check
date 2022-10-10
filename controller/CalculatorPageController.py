@@ -6,6 +6,6 @@ class CalculatorPageController(BaseController):
     
     def buttonclick(self,command):
         print(command)
-        from controller.LoginPageController import LoginPageController
-        from view.loginpage.LoginPage import LoginPage
-        Navigation().navigate(LoginPage,LoginPageController)
+        from controller.ForgotPasswordPageController import ForgotPasswordPageController
+        from view.forgotpassword.ForgotPasswordPage import ForgotPasswordPage
+        Navigation().navigate(ForgotPasswordPage,ForgotPasswordPageController)

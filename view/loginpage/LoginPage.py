@@ -45,7 +45,7 @@ class LoginPage(BasePage):
         )
 
         self.canvas.create_text(
-            93.0,
+            125.0,
             66.0,
             anchor="nw",
             text="User Login",
@@ -162,11 +162,8 @@ class LoginPage(BasePage):
             fill="#6E675D",
             font=("Inter SemiBold", 12 * -1)
         )
-        
     
     
-
-
     def login_button_clicked(self):
         if (self.controller):
             self.controller.buttonclick("Hello World")
