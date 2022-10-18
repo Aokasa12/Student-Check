@@ -6,8 +6,7 @@ class RegisterPageController(BaseController):
         self.view = view
 
 
-    def buttonclick(self,command):
-        print(command)
-        from controller.InformationPageController import InformationPageController
-        from view.informationpage.InformationPage import InformationPage
-        Navigation().navigate(InformationPage,InformationPageController)
+    def confirmclick(self):
+        from controller.LoginPageController import LoginPageController
+        from view.loginpage.LoginPage import LoginPage
+        Navigation().navigate(LoginPage,LoginPageController)

@@ -21,7 +21,7 @@ class RegisterPage(BasePage):
         parent.configure(bg = "#F4E8DA")
 
         self.canvas = Canvas(
-            self.window,
+            parent,
             bg = "#F4E8DA",
             height = 500,
             width = 400,
@@ -43,7 +43,7 @@ class RegisterPage(BasePage):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=self.confirmclicked,
             relief="flat"
         )
         self.button_1.place(
@@ -170,6 +170,6 @@ class RegisterPage(BasePage):
             font=("Inter Bold", 32 * -1)
         )
         
-    def registerbuttonclicked(self):
+    def confirmclicked(self):
         if (self.controller):
-            self.controller.buttonclick("Hello World")
+            self.controller.confirmclick()

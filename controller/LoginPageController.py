@@ -8,8 +8,18 @@ class LoginPageController(BaseController):
         self.view = view
 
 
-    def buttonclick(self,command):
+    def registerclick(self):
+        from controller.RegisterPageController import RegisterPageController
+        from view.registerpage.RegisterPage import RegisterPage
+        Navigation().navigate(RegisterPage,RegisterPageController)
+    
+    def signinclick(self,command):
         print(command)
         from controller.InformationPageController import InformationPageController
         from view.informationpage.InformationPage import InformationPage
         Navigation().navigate(InformationPage,InformationPageController)
+    
+    def forgotpasswordclick(self):
+        from controller.ForgotPasswordPageController import ForgotPasswordPageController
+        from view.forgotpassword.ForgotPasswordPage import ForgotPasswordPage
+        Navigation().navigate(ForgotPasswordPage,ForgotPasswordPageController)
