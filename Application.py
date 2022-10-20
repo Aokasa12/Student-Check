@@ -1,9 +1,8 @@
 
 import tkinter as tk
-from controller.LoginPageController import LoginPageController
+from controller.FrontPageController import FrontPageController
 from helper.navigation.Navigation import Navigation
-from view.loginpage.LoginPage import LoginPage
-
+from view.frontpage.FrontPage import FrontPage
 
 class Application(tk.Tk):
     def __init__(self):
@@ -12,7 +11,7 @@ class Application(tk.Tk):
         self.resizable(True, True)
         self.protocol('WM_DELETE_WINDOW', exit)
         Navigation().initialization(self)
-        Navigation().navigate(LoginPage,LoginPageController)
+        Navigation().navigate(FrontPage,FrontPageController)
 
     def exit(self):
         self.destroy()
