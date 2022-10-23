@@ -35,7 +35,16 @@ class RegisterPage(BasePage):
         self.image_1 = self.canvas.create_image(
             200.0,
             250.0,
-            image=self.image_image_1
+        image=self.image_image_1
+        )
+
+        self.canvas.create_text(
+            150.0,
+            45.0,
+            anchor="nw",
+            text="Register",
+            fill="#464543",
+            font=("Inter Bold", 32 * -1)
         )
         self.button_image_1 = PhotoImage(
             file=relative_to_assets("button_1.png"))
@@ -43,14 +52,14 @@ class RegisterPage(BasePage):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=self.confirmclicked,
+            command=self.signinbuttonclicked,
             relief="flat"
         )
         self.button_1.place(
-            x=125.0,
-            y=389.0,
-            width=157.0,
-            height=53.0
+            x=114.0,
+            y=381.0,
+            width=170.0,
+            height=63.0
         )
         self.entry_image_1 = PhotoImage(
             file=relative_to_assets("entry_1.png"))
@@ -88,7 +97,6 @@ class RegisterPage(BasePage):
             width=256.0,
             height=26.0
         )
-
         self.entry_image_3 = PhotoImage(
             file=relative_to_assets("entry_3.png"))
         self.entry_bg_3 = self.canvas.create_image(
@@ -108,24 +116,24 @@ class RegisterPage(BasePage):
             height=26.0
         )
         self.canvas.create_text(
-            19.0,
+            65.0,
             166.0,
             anchor="nw",
-            text="Gmail",
+            text="Email",
             fill="#000000",
             font=("Inter Regular", 12 * -1)
         )
 
         self.canvas.create_text(
-            45.0,
+            65.0,
             298.0,
             anchor="nw",
-            text="Confirm Password",
-            fill="#000000",
-            font=("Inter Regular", 12 * -1)
+        text="Confirm Password",
+        fill="#000000",
+        font=("Inter Regular", 12 * -1)
         )
         self.canvas.create_text(
-            46.0,
+            65.0,
             236.0,
             anchor="nw",
             text="Password",
@@ -151,9 +159,8 @@ class RegisterPage(BasePage):
             width=256.0,
             height=26.0
         )
-
         self.canvas.create_text(
-            46.0,
+            65.0,
             107.0,
             anchor="nw",
             text="Username",
@@ -161,15 +168,27 @@ class RegisterPage(BasePage):
             font=("Inter Regular", 12 * -1)
         )
 
-        self.canvas.create_text(
-            93.0,
-            45.0,
-            anchor="nw",
-            text="Register",
-            fill="#464543",
-            font=("Inter Bold", 32 * -1)
+        self.button_image_2 = PhotoImage(
+            file=relative_to_assets("button_2.png"))
+        self.button_2 = Button(
+            image=self.button_image_2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.login_clicked,
+            relief="flat"
         )
-        
-    def confirmclicked(self):
+        self.button_2.place(
+            x=308.0,
+            y=8.0,
+            width=77.0,
+            height=37.0
+        )
+    def signinbuttonclicked(self):
         if (self.controller):
-            self.controller.confirmclick()
+            self.controller.signinclick("Hello World")
+
+    def login_clicked(self):
+        if self.controller:
+            self.controller.loginclick()
+
+

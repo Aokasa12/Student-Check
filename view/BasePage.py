@@ -9,3 +9,4 @@ class BasePage(ttk.Frame):
 
     def set_controller(self,controller):
         self.controller = controller
+#setไว้ว่าทุกตัวที่มีBasePageต้องมีController

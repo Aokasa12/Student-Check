@@ -4,8 +4,7 @@ class ForgotPasswordPageController(BaseController):
     def __init__(self, view):
         self.view = view
 
-    def buttonclick(self,command):
-        print(command)
+    def loginclick(self):
         from controller.LoginPageController import LoginPageController
         from view.loginpage.LoginPage import LoginPage
         Navigation().navigate(LoginPage,LoginPageController) #เปลี่ยนหน้าUI

@@ -16,3 +16,4 @@ class Application(tk.Tk):
     def exit(self):
         self.destroy()
 
+#ตัวหลักสร้างTkinter interface แล้วสร้างตัวnavigationขึ้นมา

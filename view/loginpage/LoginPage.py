@@ -34,7 +34,7 @@ class LoginPage(BasePage):
             image=self.image_image_1
 )
         self.canvas.create_text(
-            93.0,
+            125.0,
             66.0,
             anchor="nw",
             text="User Login",
@@ -43,7 +43,7 @@ class LoginPage(BasePage):
 )
 
         self.canvas.create_text(
-            125.0,
+            160.0,
             44.0,
             anchor="nw",
             text="Student Check",
@@ -117,7 +117,7 @@ class LoginPage(BasePage):
             height=44.0
 )
         self.canvas.create_text(
-            32.0,
+            65.0,
             143.0,
             anchor="nw",
             text="Username",
@@ -126,7 +126,7 @@ class LoginPage(BasePage):
 )
 
         self.canvas.create_text(
-            46.0,
+            65.0,
             240.0,
             anchor="nw",
             text="Password",
@@ -143,7 +143,7 @@ class LoginPage(BasePage):
             relief="flat"
 )
         self.button_3.place(
-            x=62.0,
+            x=60.0,
             y=306.0,
             width=114.0,
             height=27.0 
