@@ -15,9 +15,9 @@ class LoginPageController(BaseController):
     
     def signinclick(self,command):
         print(command)
-        from controller.InformationPageController import InformationPageController
-        from view.informationpage.InformationPage import InformationPage
-        Navigation().navigate(InformationPage,InformationPageController)
+        from controller.StudentCheckController import StudentCheckController
+        from view.studentcheckpage.StudentCheckPage import StudentCheckPage
+        Navigation().navigate(StudentCheckPage,StudentCheckController)
     
     def forgotpasswordclick(self):
         from controller.ForgotPasswordPageController import ForgotPasswordPageController
