@@ -76,6 +76,20 @@ class StudentCheckPage(BasePage):
             width=70.0,
             height=31.0
         )
-    def logout_clicked(self):
+        self.button_2 = Button(
+            text = "+",
+            font = 30,
+            command=self.plus_clicked,
+            background="F4E8DA"
+            ).pack()
+
+
+
+    def plus_clicked(self):
+        if self.controller:
+            self.controller.plusclick()
+        
+    
+    def logout_cliked(self):
         if self.controller:
             self.controller.logoutclick()
