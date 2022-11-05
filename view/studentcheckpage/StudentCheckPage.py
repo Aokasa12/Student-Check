@@ -80,8 +80,9 @@ class StudentCheckPage(BasePage):
             text = "+",
             font = 30,
             command=self.plus_clicked,
-            background="F4E8DA"
-            ).pack()
+            background="#F4E8DA",
+            width= 2
+            ).pack(side = "left",padx=50,pady = 120,anchor= "nw")
 
 
 
@@ -90,6 +91,6 @@ class StudentCheckPage(BasePage):
             self.controller.plusclick()
         
     
-    def logout_cliked(self):
+    def logout_clicked(self):
         if self.controller:
             self.controller.logoutclick()
