@@ -10,8 +10,8 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 class FrontPage(BasePage):
-    def __init__(self,parent : Tk):
-        super().__init__()
+    def __init__(self,parent : Tk,request):
+        super().__init__(request)
         parent.geometry("1300x820")
         parent.configure(bg = "#F4E8DA")
 
@@ -135,5 +135,5 @@ class FrontPage(BasePage):
     
     def login_clicked(self):
         if self.controller:
-            self.controller.loginclick()
+            self.controller.login()
         

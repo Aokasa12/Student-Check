@@ -11,8 +11,8 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 class ForgotPasswordPage(BasePage):
-    def __init__(self,parent : Tk):
-        super().__init__()
+    def __init__(self,parent : Tk,request):
+        super().__init__(request)
         parent.geometry("400x500")
         parent.configure(bg = "#F4E8DA")
         self.canvas = Canvas(
@@ -47,7 +47,7 @@ class ForgotPasswordPage(BasePage):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=self.login_clicked,
+            command=self.forgot_password,
             relief="flat"
         )
         self.button_1.place(
@@ -89,7 +89,7 @@ class ForgotPasswordPage(BasePage):
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=self.login_clicked,
+            command=self.back,
             relief="flat"
         )
         self.button_2.place(
@@ -99,6 +99,9 @@ class ForgotPasswordPage(BasePage):
             height=34.0
         )
 
-    def login_clicked(self):
+    def back(self):
         if self.controller:
-            self.controller.loginclick()
+            self.controller.back()
+    def forgot_password(self):
+        if self.controller:
+            self.controller.forgot_password(self.entry_1.get())

@@ -17,8 +17,8 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 class InformationPage(BasePage):
-    def __init__(self,parent : Tk):
-        super().__init__()
+    def __init__(self,parent : Tk,request):
+        super().__init__(request)
         parent.geometry("1024x600")
         parent.configure(bg = "#F4E8DA")
         self.canvas = Canvas(

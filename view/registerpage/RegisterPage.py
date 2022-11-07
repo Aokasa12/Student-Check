@@ -1,5 +1,5 @@
 from pathlib import Path
-from tkinter import  Canvas, Entry, Button, PhotoImage, Tk
+from tkinter import  *
 
 from view.BasePage import BasePage
 
@@ -15,8 +15,8 @@ def relative_to_assets(path: str) -> Path:
 
 
 class RegisterPage(BasePage):
-    def __init__(self,parent : Tk):
-        super().__init__()
+    def __init__(self,parent : Tk,request : dict):
+        super().__init__(request)
         parent.geometry("400x500")
         parent.configure(bg = "#F4E8DA")
 
@@ -52,7 +52,7 @@ class RegisterPage(BasePage):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=self.signinbuttonclicked,
+            command=self.confirmClick,
             relief="flat"
         )
         self.button_1.place(
@@ -89,7 +89,7 @@ class RegisterPage(BasePage):
         self.entry_2 = Entry(
             bd=0,
             bg="#F4E8DA",
-            highlightthickness=0
+            highlightthickness=0,show="*"
         )
         self.entry_2.place(
             x=72.0,
@@ -107,7 +107,7 @@ class RegisterPage(BasePage):
         self.entry_3 = Entry(
             bd=0,
             bg="#F4E8DA",
-            highlightthickness=0
+            highlightthickness=0,show="*"
         )
         self.entry_3.place(
             x=72.0,
@@ -174,7 +174,7 @@ class RegisterPage(BasePage):
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=self.login_clicked,
+            command=self.backClick,
             relief="flat"
         )
         self.button_2.place(
@@ -183,12 +183,13 @@ class RegisterPage(BasePage):
             width=77.0,
             height=37.0
         )
-    def signinbuttonclicked(self):
+        
+    def confirmClick(self):
         if (self.controller):
-            self.controller.signinclick("Hello World")
+            self.controller.register(self.entry_1.get(),self.entry_2.get(),self.entry_3.get(),self.entry_4.get())
 
-    def login_clicked(self):
+    def backClick(self):
         if self.controller:
-            self.controller.loginclick()
+            self.controller.navLogin()
 
 

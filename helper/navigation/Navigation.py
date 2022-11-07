@@ -7,17 +7,17 @@ from view.BasePage import BasePage
 @singleton
 class Navigation():
     def __init__(self : Tk):
-        self.window = None
+        self.window : Tk = None
     
     def initialization(self,window):
         if (self.window == None):
             self.window = window
     
-    def navigate(self,Page : BasePage,Controller  : BaseController):
+    def navigate(self,Page : BasePage,Controller  : BaseController , request : dict = dict()):
 
         self.clear()
 
-        view = Page(self.window)
+        view = Page(self.window ,request)
 
         controller = Controller(view)
 

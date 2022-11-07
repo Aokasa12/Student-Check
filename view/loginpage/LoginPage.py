@@ -1,5 +1,5 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import *
 from view.BasePage import BasePage
 
 
@@ -12,8 +12,20 @@ def relative_to_assets(path: str) -> Path:
 
 
 class LoginPage(BasePage):
-    def __init__(self,parent : Tk):
-        super().__init__()
+    def __init__(self,parent : Tk,request):
+        super().__init__(request)
+
+
+        self.email = ""
+        self.password = ""
+        if "Email" in self.request:
+            self.email = self.request["Email"]
+        if "Password" in self.request:
+            self.password = self.request["Password"]
+
+
+
+        #View
         parent.geometry("400x500")
         parent.configure(bg = "#F4E8DA")
         self.canvas = Canvas(
@@ -92,6 +104,8 @@ class LoginPage(BasePage):
             bg="#F4E8DA",
             highlightthickness=0
 )
+        self.entry_1.insert(END,self.email)
+
         self.entry_1.place(
             x=72.0,
             y=167.0,
@@ -108,8 +122,9 @@ class LoginPage(BasePage):
         self.entry_2 = Entry(
             bd=0,
             bg="#F4E8DA",
-            highlightthickness=0
+            highlightthickness=0,show="*"
 )
+        self.entry_2.insert(END,self.password)
         self.entry_2.place(
             x=72.0,
             y=260.0,
@@ -120,7 +135,7 @@ class LoginPage(BasePage):
             65.0,
             143.0,
             anchor="nw",
-            text="Username",
+            text="Email",
             fill="#000000",
             font=("Inter Regular", 12 * -1)
 )
@@ -151,12 +166,12 @@ class LoginPage(BasePage):
 
     def registerbuttonclicked(self):
         if (self.controller):
-            self.controller.registerclick()
+            self.controller.register()
 
     def signinbuttonclicked(self):
         if (self.controller):
-            self.controller.signinclick("Hello World")
+            self.controller.signin(self.entry_1.get(),self.entry_2.get())
     
     def forgotpasswordbuttonclicked(self):
         if (self.controller):
-            self.controller.forgotpasswordclick()
+            self.controller.forgotpassword()

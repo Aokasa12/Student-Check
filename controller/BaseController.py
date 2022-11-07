@@ -1,3 +1,6 @@
+from view.BasePage import BasePage
 class BaseController:
-    def __init__(self):
-        self.view = None
+    def __init__(self,view):
+        self.view = view
+        self.request = dict()
+
