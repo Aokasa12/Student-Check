@@ -2,5 +2,5 @@ pip install
 email_validator
 bcrypt
 tkinter
-mysql-connector-pythonpi
+mysql-connector-python
 tkcalendar
