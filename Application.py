@@ -11,7 +11,7 @@ class Application(tk.Tk):
         super().__init__()
         self.title('Python Classroom')
         self.resizable(False, False)
-        self.protocol('WM_DELETE_WINDOW', exit)
+        self.protocol('WM_DELETE_WINDOW', self.exit)
         Database()
         Navigation().initialization(self)
         Navigation().navigate(FrontPage,FrontPageController,request=dict())
