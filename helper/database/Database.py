@@ -2,7 +2,7 @@ import mysql.connector
 from helper.singleton.singleton import singleton
 
 
-
+#ทำหน้าที่เชื่อมDatabase
 @singleton
 class Database():
     def __init__(self):
@@ -14,7 +14,7 @@ class Database():
         )
         self.cursor = self.mydb.cursor()
 
-
+#setter getter ตั้งค่ารับค่า
     def __del__(self):
         self.cursor.close()
         self.mydb.close()

@@ -9,7 +9,7 @@ class FrontPageController(BaseController):
     def login(self):
 
         remember = RememberMe()
-        data = remember.read()
+        data = remember.read() 
 
         if (data is not None):
             self.request.update({"Email" : data["Email"]})

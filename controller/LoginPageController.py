@@ -31,10 +31,10 @@ class LoginPageController(BaseController):
                 messagebox.showerror("Error", "ไม่มีผู้ใช้ Email นี้")
                 return
 
-            bytes = password.encode('utf-8')
+            bytes = password.encode('utf-8') #ตัวEnd code ทำให้เข้ามาเห็นได้๖เช่นแสดงภาษาไทยได้)
             passwordBytes = teacher.Password.encode('utf-8')
         
-            result = bcrypt.checkpw(bytes, passwordBytes)
+            result = bcrypt.checkpw(bytes, passwordBytes) #checkรหัสของUserว่าตรงกับแฮชของUserรึเปล่า
 
             if (result is False):
                 messagebox.showerror("Error","รหัสผ่านผิดพลาด")
