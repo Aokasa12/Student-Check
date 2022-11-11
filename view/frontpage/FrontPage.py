@@ -11,12 +11,12 @@ def relative_to_assets(path: str) -> Path:
 
 class FrontPage(BasePage):
     def __init__(self,parent : Tk,request):
-        super().__init__(request)
-        parent.geometry("1300x820")
-        parent.configure(bg = "#F4E8DA")
+        super().__init__(parent,request)
+        self.parent.geometry("1300x820")
+        self.parent.configure(bg = "#F4E8DA")
 
         self.canvas = Canvas(
-            parent,
+            self.parent,
             bg = "#F4E8DA",
             height = 820,
             width = 1300,

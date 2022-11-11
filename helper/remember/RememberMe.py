@@ -33,6 +33,7 @@ class RememberMe():
             return json_object
         except Exception as e:
             print(e)
+            self.file.close()
             return None
 
     

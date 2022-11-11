@@ -45,6 +45,15 @@ class CheckInDAOImpl():
         for checkIn in data:
             checkInLst.append(checkIn)
         return checkInLst
+    
+    def findAllByClassIdAndDateJoinStudentJoinClassroom(self,classId,date):
+        self.cursor.execute(f"SELECT Classroom.Name,CheckIn.StudentID,Student.Name,CheckIn.Date,CheckIn.ComeCheck,CheckIn.AbsentCheck,CheckIn.ComeReason,CheckIn.AbsentReason FROM CheckIn inner join Student ON Student.StudentID = CheckIn.StudentID inner join Classroom on CheckIn.ClassID = Classroom.ClassID where CheckIn.classId = '{classId}' and CheckIn.date = '{date}'")
+        data = self.cursor.fetchall()
+        checkInLst = []
+        for checkIn in data:
+            checkInLst.append(checkIn)
+        return checkInLst
+
     def deleteFromClassId(self,classId):
         sql = f'DELETE FROM CheckIn WHERE ClassID = {classId}'
         self.cursor.execute(sql)

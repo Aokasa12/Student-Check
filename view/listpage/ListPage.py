@@ -16,14 +16,14 @@ def relative_to_assets(path: str) -> Path:
 
 class ListPage(BasePage):
     def __init__(self,parent : Tk,request):
-        super().__init__(request)
+        super().__init__(parent,request)
 
 
         self.width = 1024
         self.height = 795
-        self.parent = parent
-        parent.geometry(f"{self.width}x{self.height}")
-        self.topframe = Frame(parent,pady=3,bg="#DBC2AB",height=50,width=1024)
+        self.parent = self.parent
+        self.parent.geometry(f"{self.width}x{self.height}")
+        self.topframe = Frame(self.parent,pady=3,bg="#DBC2AB",height=50,width=1024)
         self.topframe.pack_propagate(False)
         self.label = Label(self.topframe,text = "Student Check",background="#DBC2AB",font="Inter",padx=10,pady=10)
         self.label.pack(side=LEFT)
@@ -64,7 +64,7 @@ class ListPage(BasePage):
 
         self.topframe.pack(side=TOP)
 
-        self.bottom_frame = Frame(parent,bg ="#F4E8DA",height=745 ,width=1024)
+        self.bottom_frame = Frame(self.parent,bg ="#F4E8DA",height=745 ,width=1024)
         self.bottom_frame.pack_propagate(False)
 
         self.image3 = PhotoImage(

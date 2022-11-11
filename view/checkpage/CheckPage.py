@@ -5,13 +5,8 @@ import datetime
 from model.CheckInBox import CheckInBox
 from model.CheckIn import CheckIn
 
-
-
-
-
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
-
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -21,16 +16,15 @@ def relative_to_assets(path: str) -> Path:
 class CheckPage(BasePage):
     
     def __init__(self,parent : Tk , request):
-        super().__init__(request)
+        super().__init__(parent,request)
 
 
         self.date = None
         self.width = 1024
         self.height = 795
-        self.parent = parent
-        parent.geometry(f"{self.width}x{self.height}")
-        parent.configure(bg = "#F4E8DA")
-        self.topframe = Frame(parent,pady=3,bg="#DBC2AB",height=50,width=1024)
+        self.parent.geometry(f"{self.width}x{self.height}")
+        self.parent.configure(bg = "#F4E8DA")
+        self.topframe = Frame(self.parent,pady=3,bg="#DBC2AB",height=50,width=1024)
         self.topframe.pack_propagate(False)
         self.label = Label(self.topframe,text = "Student Check",background="#DBC2AB",font="Inter",padx=10,pady=10)
         self.label.pack(side=LEFT)
@@ -54,6 +48,20 @@ class CheckPage(BasePage):
         
         )
 
+        self.image2 = PhotoImage(
+            file=relative_to_assets("Vector2.png"))
+
+        self.home_button = Button(
+            self.topframe,
+            image=self.image2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_2 clicked"),
+            relief="flat",
+            bg="#DBC2AB",
+            width=50
+        
+        )
 
         self.image3 = PhotoImage(
             file=relative_to_assets("Logout.png"))
@@ -70,20 +78,22 @@ class CheckPage(BasePage):
         )
 
         self.back_button.pack(side=RIGHT)
+        self.home_button.pack(side = RIGHT)
         self.logout_button.pack(side = RIGHT)
 
 
         self.topframe.pack(side=TOP)
 
 
-        self.mainframe = Frame(parent,pady=3,bg="#F4E8DA",height=785,width=1024)
+        self.mainframe = Frame(self.parent,pady=3,bg="#F4E8DA",height=785,width=1024)
         self.mainframe.pack(side = TOP)
         self.mainframe.pack_propagate(False)
 
         self.label1 = Label(self.mainframe,text="Check",font=('Arial',12,"bold"),bg = '#F4E8DA')
         self.label1.pack(side = TOP,padx=(0,800),pady=10)
 
-        self.date_frame = Frame(self.mainframe,bg = "#F4E8DA",height=40,width=300)
+        self.date_frame = Frame(self.mainframe,bg = "#F4E8DA",height=40,width=1024)
+        self.date_frame.pack_propagate(False)
         self.label2 = Label(self.date_frame , text= "กรอก วัน/เดือน/ปี(ค.ศ.) ที่ต้องการเช็คชื่อ ",bg = "#F4E8DA",font=('Arial',12))
 
 
@@ -92,7 +102,7 @@ class CheckPage(BasePage):
 
         self.date_frame_input = Frame(self.date_frame , bg = "#DBC2AB",width=200 ,height=30)
         self.date_frame_input.pack(side = LEFT)
-        self.date_frame.pack(side = TOP,padx = (0,540),pady = 10)
+        self.date_frame.pack(side = TOP,pady = 10)
         self.date_frame_input.pack_propagate(False)
 
         self.date_time = Button(self.date_frame_input,image = self.รูปวันที่,bg = "#F4E8DA",
@@ -102,6 +112,11 @@ class CheckPage(BasePage):
 
         self.date_label = Label(self.date_frame_input,text="กรุณากรอกวันที่",bg = "#DBC2AB",font="Inter 12 bold")
         self.date_label.pack(side = LEFT,padx=(20,0))
+
+        self.exportButton = PhotoImage(
+            file=relative_to_assets("Group5.png"))
+        self.export_button = Button(self.date_frame,image=self.exportButton,bg = "#F4E8DA",borderwidth=0,highlightthickness=0,relief="flat",command=self.export)
+        self.export_button.pack(side = RIGHT , padx = (0,30))
 
         
 
@@ -278,9 +293,15 @@ class CheckPage(BasePage):
     def calendar(self):
         if (self.controller):
             date = self.controller.calendar()
+            if (date == ""):
+                return
             date = date.split("/")
             date = datetime.date(int("20" + date[2]),int(date[0]),int(date[1]))
             self.date = date
             self.date_label.config(text = date.strftime("%d/%m/%y"))
             self.controller.newData(date,self.request["classId"])
+
+    def export(self):
+        if (self.controller):
+            self.controller.export(self.request["classId"],self.date)
 

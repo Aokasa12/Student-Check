@@ -12,6 +12,10 @@ from dao.StudentDAOImpl import StudentDAOImpl
 class CreatePageController(BaseController):
     def __init__(self, view ):
         super().__init__(view)
+        self.classroomDAO  =ClassroomDAOImpl()
+        self.studentDAO  = StudentDAOImpl()
+        self.inClassroomDAO = InClassroomDAOImpl()
+        self.context = Context()
     
     
 
@@ -25,28 +29,24 @@ class CreatePageController(BaseController):
                 studentLst.append(Student(StudentID=classLst[i][0].get() , Name=classLst[i][1].get()))
 
 
-            context = Context()
-            teacher_email = context.get_email()
+            teacher_email = self.context.get_email()
 
 
-            classroomDAO = ClassroomDAOImpl()
-            classroom = Classroom(ClassID=None , Name= classname.get(),TeacherEmail=teacher_email )
-            classroomDAO.save(classroom)
+            classroom = Classroom(ClassID=None , Name= classname,TeacherEmail=teacher_email )
+            self.classroomDAO.save(classroom)
 
-            classroom = classroomDAO.findFromNameAndEmail(classroom)
+            classroom = self.classroomDAO.findFromNameAndEmail(classroom)
 
 
 
-            studentDAO = StudentDAOImpl()
 
             for i in studentLst:
-                studentDAO.saveOrUpdate(i)
+                self.studentDAO.saveOrUpdate(i)
 
-            inClassroomDAO = InClassroomDAOImpl()
 
             
             for i in studentLst:
-                inClassroomDAO.save(InClassroom(StudentID=i.StudentID,ClassID=classroom.ClassID))
+                self.inClassroomDAO.save(InClassroom(StudentID=i.StudentID,ClassID=classroom.ClassID))
             
             self.navBack()
         except Exception as e:
@@ -55,8 +55,13 @@ class CreatePageController(BaseController):
 
 
     def validate(self,classname,classLst) -> bool:
-        if classname.get() == "":
+        if classname == "":
             messagebox.showerror("Error", "โปรดใส่ชื่อห้องเรียน")
+            return False
+        tEmail = self.context.get_email()
+        classroom = self.classroomDAO.findFromNameAndEmail(Classroom(ClassID=None,Name=classname,TeacherEmail=tEmail))
+        if (classroom):
+            messagebox.showerror("Error", "มีห้องเรียนนี้อยู่แล้ว")
             return False
         if len(classLst) == 0:
             messagebox.showerror("Error", "โปรดกรอกข้อมูล")
@@ -80,11 +85,9 @@ class CreatePageController(BaseController):
     
     def navBack(self):
         try:
-            context = Context()
-            email = context.get_email()
+            email = self.context.get_email()
 
-            classroomDAO = ClassroomDAOImpl()
-            data = classroomDAO.findAllFromTeacherEmail(email)
+            data = self.classroomDAO.findAllFromTeacherEmail(email)
             self.request.update({"classroom" : data})
 
             from view.listpage.ListPage import ListPage
@@ -93,3 +96,9 @@ class CreatePageController(BaseController):
             Navigation().navigate(ListPage,ListPageController,self.request)
         except Exception as e:
             print(e)
+    def find_class(self,classname):
+
+        if (classname == ""):
+            return None
+        data = self.classroomDAO.filterFromName(classname)
+        return data

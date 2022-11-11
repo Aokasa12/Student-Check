@@ -54,9 +54,15 @@ class ClassroomDAOImpl():
         data = self.cursor.fetchall()
         classroomLst = []
         for classroom in data:
-            print(classroom)
             classroomLst.append(Classroom(ClassID=classroom[0],Name=classroom[1],TeacherEmail=classroom[2]))
-        print(classroomLst)
+        return classroomLst
+    
+    def filterFromName(self,name) -> list:
+        self.cursor.execute(f'SELECT DISTINCT Name FROM Classroom where Name LIKE "{name}%" and NOT (Name = "{name}")   LIMIT 3')
+        data = self.cursor.fetchall()
+        classroomLst = []
+        for classroom in data:
+            classroomLst.append(classroom)
         return classroomLst
 
 

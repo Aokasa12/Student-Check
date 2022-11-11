@@ -13,7 +13,7 @@ def relative_to_assets(path: str) -> Path:
 
 class LoginPage(BasePage):
     def __init__(self,parent : Tk,request):
-        super().__init__(request)
+        super().__init__(parent,request)
 
 
         self.email = ""
@@ -26,10 +26,10 @@ class LoginPage(BasePage):
 
 
         #View
-        parent.geometry("400x500")
-        parent.configure(bg = "#F4E8DA")
+        self.parent.geometry("400x500")
+        self.parent.configure(bg = "#F4E8DA")
         self.canvas = Canvas(
-            parent,
+            self.parent,
             bg = "#F4E8DA",
             height = 500,
             width = 400,

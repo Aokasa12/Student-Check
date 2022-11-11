@@ -13,20 +13,25 @@ from view.toplevel.comecheck.ComeCheck import ComeCheck
 from view.toplevel.calendarlevel.CalendarLevel import CalendarLevel
 from model.CheckInBox import CheckInBox
 from view.toplevel.absentcheck.AbsentCheck import AbsentCheck
+import os
+
 
 
 
 class CheckPageController(BaseController):
     def __init__(self, view ):
         super().__init__(view)
+        self.context = Context()
+        self.checkInDAO = CheckInDAOImpl()
+        self.classroomDAO = ClassroomDAOImpl()
+        self.studentDAOImpl = StudentDAOImpl()
+        self.inClassroomDAO = InClassroomDAOImpl()
     
     def back(self):
 
-        globalContext = Context()
-        tEmail = globalContext.get_email()
+        tEmail = self.context.get_email()
 
-        classroomDAO = ClassroomDAOImpl()
-        data = classroomDAO.findAllFromTeacherEmail(tEmail)
+        data = self.classroomDAO.findAllFromTeacherEmail(tEmail)
         self.request.update({"classroom" : data})
 
 
@@ -36,8 +41,7 @@ class CheckPageController(BaseController):
         Navigation().navigate(ListPage,ListPageController,self.request)
     
     def logout(self):
-        context = Context()
-        del context
+        del self.context
 
         from view.frontpage.FrontPage import FrontPage
         from controller.FrontPageController import FrontPageController
@@ -45,15 +49,45 @@ class CheckPageController(BaseController):
         Navigation().navigate(FrontPage,FrontPageController)
 
     def calendar(self):
-        up = CalendarLevel(self.view.parent)
+        up = CalendarLevel(self.view.parent,self.view.date)
         up.grab_set()
         up.wait_window()
         return up.evar.get()
+    
+    def export(self,classId,date):
+        if (date == None):
+            messagebox.showerror("Error","โปรดระบุวันที่")
+            return
+        data = self.checkInDAO.findAllByClassIdAndDateJoinStudentJoinClassroom(classId,date)
+        if (len(data) == 0):
+            return
+        
+        file = open("export.csv", "w",encoding="utf-8")
+        file.write(f"Classname,Student Id,Student Name,Date,isCome,Reason\n")
+        isCome = "ไม่ได้เช็ค"
+        reason = "ไม่ได้เช็ค"
+        for i in data:
+            if (i[4] == 1):
+                isCome = "มา"
+                reason = i[6]
+            if (i[5] == 1):
+                isCome = "ไม่มา"
+                reason = i[7]
+            
+            file.write(f"{i[0]},{i[1]},{i[2]},{i[3]},{isCome},{reason}\n")
+        file.close()
+
+        os.system("notepad.exe export.csv")
+        
+
+
+        
+        
+
 
     def box_clicked(self,studentId,side,lst,classId,date):
 
-        checkInDAO = CheckInDAOImpl()
-        checkIn = checkInDAO.find(classId,studentId,date)
+        checkIn = self.checkInDAO.find(classId,studentId,date)
 
         for i in lst:
             checkInBox : CheckInBox = i
@@ -89,7 +123,7 @@ class CheckPageController(BaseController):
                 data.ComeCheck = 0
                 data.LeftButton.configure(image=self.view.emptybox)
                 data.LeftLabel.config(text = reason)
-            checkInDAO.update(CheckIn(ClassID=checkIn.ClassID,StudentID=checkIn.StudentID,Date=checkIn.Date,ComeCheck=data.ComeCheck,AbsentCheck=checkIn.AbsentCheck,ComeReason=reason,AbsentReason=checkIn.AbsentReason))
+            self.checkInDAO.update(CheckIn(ClassID=checkIn.ClassID,StudentID=checkIn.StudentID,Date=checkIn.Date,ComeCheck=data.ComeCheck,AbsentCheck=checkIn.AbsentCheck,ComeReason=reason,AbsentReason=checkIn.AbsentReason))
             
         
 
@@ -118,34 +152,31 @@ class CheckPageController(BaseController):
                 data.AbsentCheck = 0
                 data.RightButton.configure(image=self.view.emptybox)
                 data.RightLabel.config(text = reason)
-            checkInDAO.update(CheckIn(ClassID=checkIn.ClassID,StudentID=checkIn.StudentID,Date=checkIn.Date,ComeCheck=checkIn.ComeCheck,AbsentCheck=data.AbsentCheck,ComeReason=checkIn.ComeReason,AbsentReason=reason))
+            self.checkInDAO.update(CheckIn(ClassID=checkIn.ClassID,StudentID=checkIn.StudentID,Date=checkIn.Date,ComeCheck=checkIn.ComeCheck,AbsentCheck=data.AbsentCheck,ComeReason=checkIn.ComeReason,AbsentReason=reason))
         
 
 
 
     def newData(self,date,classId):
         print(date)
-        checkInDAO = CheckInDAOImpl()
         checkInLst = []
-        data = checkInDAO.findAllByClassIdAndDateJoinStudent(classId,date)
+        data = self.checkInDAO.findAllByClassIdAndDateJoinStudent(classId,date)
         if (len(data) > 0):
             for i in range(len(data)):
                 checkInLst.append(CheckInStudent(ClassID=classId,StudentID=data[i][1],Name=data[i][8],Date=data[i][2],ComeCheck=data[i][3],AbsentCheck=data[i][4],ComeReason=data[i][5],AbsentReason=data[i][6]))
             self.view.insertData(checkInLst,enable = True)
             return
         
-        inClassroomDAO = InClassroomDAOImpl()
-        inClassroom = inClassroomDAO.findAllByClassId(classId)
+        inClassroom = self.inClassroomDAO.findAllByClassId(classId)
 
 
-        studentDAOImpl = StudentDAOImpl()
         checkInLst = []
         for i in inClassroom:
-            student = studentDAOImpl.find(studentID=i.StudentID)
+            student = self.studentDAOImpl.find(studentID=i.StudentID)
             checkIn = CheckIn(ClassID=classId, StudentID=student.StudentID,Date=date,ComeCheck=0,AbsentCheck=0,ComeReason="",AbsentReason="")
             checkInStudent = CheckInStudent(ClassID=classId,StudentID=student.StudentID,Name=student.Name,Date=date,ComeCheck=0,AbsentCheck=0,ComeReason="",AbsentReason="")
             checkInLst.append(checkInStudent)
-            checkInDAO.save(checkIn)
+            self.checkInDAO.save(checkIn)
 
         self.view.insertData(checkInLst,enable = True)
         
