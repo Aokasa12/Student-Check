@@ -77,7 +77,7 @@ class CheckPageController(BaseController):
             file.write(f"{i[0]},{i[1]},{i[2]},{i[3]},{isCome},{reason}\n")
         file.close()
 
-        os.system("notepad.exe export.csv")
+        os.system("notepad.exe export.csv") #operating system 
         
 
 
