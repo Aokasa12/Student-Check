@@ -58,6 +58,14 @@ class CheckInDAOImpl():
         sql = f'DELETE FROM CheckIn WHERE ClassID = {classId}'
         self.cursor.execute(sql)
         self.db.commit()
+    
+    def findStudentByClassIdAndDateJoinStudent(self,classId,name):
+        self.cursor.execute(f"SELECT CheckIn.Date,CheckIn.ComeCheck,CheckIn.AbsentCheck,ComeReason,AbsentReason FROM CheckIn inner join Student ON Student.StudentID = CheckIn.StudentID where CheckIn.ClassID = '{classId}' and Student.Name = '{name}'")
+        data = self.cursor.fetchall()
+        checkInLst = []
+        for checkIn in data:
+            checkInLst.append(checkIn)
+        return checkInLst
 
     
       

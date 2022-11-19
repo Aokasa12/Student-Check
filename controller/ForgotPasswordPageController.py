@@ -29,8 +29,8 @@ class ForgotPasswordPageController(BaseController):
         self.teacherDAO.update(teacher)
 
 
-        port = 587  # For starttls พอร์ทนึงของการส่งEmail
-        msg = MIMEMultipart() #Emailมีสามส่วนจากใครถึงใครข้อมูลคืออะไร
+        port = 587   # For starttls พอร์ทนึงของการส่งEmail
+        msg = MIMEMultipart()#Emailมีสามส่วนจากใครถึงใครข้อมูลคืออะไร
         msg['From'] = 'ryuinw123.thang@gmail.com'
         msg['To'] = email
         msg['Subject'] = 'ATrip Forgetpassword'
@@ -41,9 +41,9 @@ class ForgotPasswordPageController(BaseController):
         message = "Your Username is " + teacher.Username + """
 Your Password is """ + newPassword
         msg.attach(MIMEText(message,"plain")) #libaryกำหนดว่าจะส่งฟอร์มmessageที่ส่งให้ไปต้องเอาเข้าattach
-        context = ssl.create_default_context()#protocol encrypt เชื่อมต่อข้อมูลที่ถูกเข้ารหัสไว้
+        context = ssl.create_default_context() #protocol encrypt เชื่อมต่อข้อมูลที่ถูกเข้ารหัสไว้
         with smtplib.SMTP(smtp_server, port) as server:
-            server.ehlo()  # Can be omitted ถ้าไม่ใช้ส่งเมลไม่ได้
+            server.ehlo()  # Can be omittedถ้าไม่ใช้ส่งเมลไม่ได้
             server.starttls(context=context)
             server.ehlo()  # Can be omitted
             server.login(sender_email, password)

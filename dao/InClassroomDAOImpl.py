@@ -48,5 +48,13 @@ class InClassroomDAOImpl():
         self.cursor.execute(sql)
         self.db.commit()
 
+    def findAllByClassIdJoinStudent(self,classId) -> list:
+        self.cursor.execute(f"SELECT Student.Name FROM InClassroom inner join Student On InClassroom.StudentID = Student.StudentID where ClassID = {classId}")
+        data = self.cursor.fetchall()
+        inClassroomLst = []
+        for inClassroom in data:
+            inClassroomLst.append(inClassroom[0])
+        return inClassroomLst
+
 
       

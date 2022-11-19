@@ -48,20 +48,6 @@ class CheckPage(BasePage):
         
         )
 
-        self.image2 = PhotoImage(
-            file=relative_to_assets("Vector2.png"))
-
-        self.home_button = Button(
-            self.topframe,
-            image=self.image2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat",
-            bg="#DBC2AB",
-            width=50
-        
-        )
 
         self.image3 = PhotoImage(
             file=relative_to_assets("Logout.png"))
@@ -78,7 +64,6 @@ class CheckPage(BasePage):
         )
 
         self.back_button.pack(side=RIGHT)
-        self.home_button.pack(side = RIGHT)
         self.logout_button.pack(side = RIGHT)
 
 

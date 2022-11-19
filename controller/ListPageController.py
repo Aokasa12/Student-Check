@@ -11,6 +11,10 @@ from model.Classroom import Classroom
 class ListPageController(BaseController):
     def __init__(self, view ):
         super().__init__(view)
+        self.inClassroomDAO = InClassroomDAOImpl()
+        self.checkInDAO = CheckInDAOImpl()
+        self.classroomDAO = ClassroomDAOImpl()
+        self.studentDAOImpl = StudentDAOImpl()
 
     def choose_decision(self,classId):
         up = Decision(self.view.parent)
@@ -23,28 +27,41 @@ class ListPageController(BaseController):
             self.enter_classroom(classId)
         elif (up.mode.get() == 2):
             self.delete_classroom(classId)
+        elif(up.mode.get() ==  3):
+            self.filter_classroom(classId)
+            return
     def change_password(self):
+
         from view.changepassword.ChangePasswordPage import ChangePasswordPage
         from controller.ChangePasswordPageController import ChangePasswordPageController
         Navigation().navigate(ChangePasswordPage,ChangePasswordPageController)
+    
+    def filter_classroom(self,classId):
+
+        self.request.update({"classId":classId})
+
+        data = self.inClassroomDAO.findAllByClassIdJoinStudent(classId)
+        
+        self.request.update({"studentLst" : data})
+        
+        from view.filterclass.FilterClassPage import FilterClassPage
+        from controller.FilterClassPageController import FilterClassPageController
+        Navigation().navigate(FilterClassPage,FilterClassPageController,self.request)
         
 
     def delete_classroom(self,classId):
         
 
-        inClassroomDAO = InClassroomDAOImpl()
-        inClassroomDAO.deleteFromClassId(classId)
+        self.inClassroomDAO.deleteFromClassId(classId)
 
-        checkInDAO = CheckInDAOImpl()
-        checkInDAO.deleteFromClassId(classId)
+        self.checkInDAO.deleteFromClassId(classId)
 
-        classroomDAO = ClassroomDAOImpl()
-        classroomDAO.delete(Classroom(ClassID=classId,Name=None,TeacherEmail=None))
+        self.classroomDAO.delete(Classroom(ClassID=classId,Name=None,TeacherEmail=None))
 
         context = Context()
         tEmail = context.get_email()
 
-        data = classroomDAO.findAllFromTeacherEmail(tEmail)
+        data = self.classroomDAO.findAllFromTeacherEmail(tEmail)
         self.request.update({"classroom" : data})
 
 
@@ -57,13 +74,11 @@ class ListPageController(BaseController):
     def enter_classroom(self,classId):
         self.request.update({"classId":classId})
 
-        inClassroomDAO = InClassroomDAOImpl()
-        inClassroom = inClassroomDAO.findAllByClassId(classId)
+        inClassroom = self.inClassroomDAO.findAllByClassId(classId)
 
-        studentDAOImpl = StudentDAOImpl()
         checkInLst = []
         for i in inClassroom:
-            student = studentDAOImpl.find(studentID=i.StudentID)
+            student = self.studentDAOImpl.find(studentID=i.StudentID)
             checkIn = CheckInStudent(ClassID=classId, StudentID=student.StudentID,Name=student.Name,Date=None,ComeCheck=0,AbsentCheck=0,ComeReason="",AbsentReason="")
             checkInLst.append(checkIn)
         
