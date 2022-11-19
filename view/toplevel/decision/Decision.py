@@ -6,13 +6,13 @@ ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-class Decision(Toplevel):
+class Decision(Toplevel): #หน้ารอง
     def __init__(self,parent) -> None:
         super().__init__(parent)
         self.geometry('320x230')
         self.title('Toplevel Window')
         self.configure(bg = "#F4E8DA")
-        self.mode = IntVar()
+        self.mode = IntVar()#ตัวเก็บint ใช้กับTkinter
         self.mode.set(0)
         self.canvas = Canvas(
             self,

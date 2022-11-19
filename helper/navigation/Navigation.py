@@ -24,5 +24,5 @@ class Navigation():
         view.set_controller(controller)
     
     def clear(self):
-        for widget in self.window.winfo_children():
+        for widget in self.window.winfo_children(): #เข้าไปในทุกwidgetที่เป็นไปได้
             widget.destroy()

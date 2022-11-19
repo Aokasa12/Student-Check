@@ -19,7 +19,7 @@ class ListPageController(BaseController):
     def choose_decision(self,classId):
         up = Decision(self.view.parent)
         up.grab_set()
-        up.wait_window()
+        up.wait_window()#รอให้Windowบนเสร็จก่อน
 
         if (up.mode.get() == 0):
             return

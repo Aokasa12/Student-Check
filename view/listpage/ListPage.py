@@ -21,7 +21,6 @@ class ListPage(BasePage):
 
         self.width = 1024
         self.height = 795
-        self.parent = self.parent
         self.parent.geometry(f"{self.width}x{self.height}")
         self.topframe = Frame(self.parent,pady=3,bg="#DBC2AB",height=50,width=1024)
         self.topframe.pack_propagate(False)
@@ -111,12 +110,12 @@ class ListPage(BasePage):
             self.class_frame = Button(self.bottom_frame,image=self.image4,bg = "#b2917e",borderwidth=0,
             highlightthickness=0,
             relief="flat",)
-            self.class_frame.config(command= classroom_pressed)
+            self.class_frame.config(command= classroom_pressed)#เพิ่มหรือเปลี่ยนแปลงคุณสมบัติทีหลัง
             self.class_frame.pack(side=TOP,pady=5)
 
             self.class_label = Label(self.bottom_frame,text=classroom.Name,bg = "#e0c4ac")
             self.class_label.place(x = x , y = y)
-
+            self.class_label.bind("<Button-1>",classroom_pressed)#Button1คลิกซ้าย ให้Labelรับการคลิกด้วย
             y = y + 48
     
     def classroom_pressed(self,classId):

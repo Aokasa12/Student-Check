@@ -3,7 +3,7 @@ from helper.navigation.Navigation import Navigation
 from model.Teacher import Teacher
 from dao.TeacherDAOImpl import TeacherDAOImpl
 from tkinter import messagebox
-from email_validator import validate_email, EmailNotValidError
+from email_validator import validate_email, EmailNotValidError #Library for check email
 import bcrypt
 
 
@@ -25,12 +25,12 @@ class RegisterPageController(BaseController):
 
             teacher = self.teacherDAO.find(email)
 
-            if teacher:
+            if teacher is not None:
                 messagebox.showerror("Error", "Email นี้มีผู้ใช้อยู่แล้ว")
                 return
             
 
-            bytes = password.encode('utf-8')
+            bytes = password.encode('utf-8')#bcryptต้องใช้utf-8
 
             salt = bcrypt.gensalt()
 
@@ -61,8 +61,7 @@ class RegisterPageController(BaseController):
         try:
         # validate and get info
             v = validate_email(email)
-        # replace with normalized form
-            email = v["email"] 
+
             return True
         except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
