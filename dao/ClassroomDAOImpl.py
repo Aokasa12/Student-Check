@@ -50,8 +50,8 @@ class ClassroomDAOImpl():
         return None
 
     def findAllFromTeacherEmail(self,tEmail)  -> list:
-        self.cursor.execute(f'SELECT * FROM Classroom where TeacherEmail = "{tEmail}"')
-        data = self.cursor.fetchall()
+        self.cursor.execute(f'SELECT * FROM Classroom where TeacherEmail = "{tEmail}"')#ใช้คำสั่งSQL
+        data = self.cursor.fetchall()#เลือกทั้งหมด
         classroomLst = []
         for classroom in data:
             classroomLst.append(Classroom(ClassID=classroom[0],Name=classroom[1],TeacherEmail=classroom[2]))

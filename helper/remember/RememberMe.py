@@ -1,14 +1,7 @@
-from helper.singleton.singleton import singleton
-from model.Teacher import Teacher
-
 import json
 
 class RememberMe():
-    def __init__(self) -> None:
-        self.email = None
-        self.password = None
         
-
     def save(self,email,password):
         try:
             self.file = open("storage.json","w")

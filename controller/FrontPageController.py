@@ -12,7 +12,7 @@ class FrontPageController(BaseController):
         data = remember.read()
 
         if (data is not None):
-            self.request.update({"Email" : data["Email"]})
+            self.request.update({"Email" : data["Email"]})#key:ค่าของkey
             self.request.update({"Password" : data["Password"]})
             
         from view.loginpage.LoginPage import LoginPage

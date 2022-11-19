@@ -13,8 +13,8 @@ class TeacherDAOImpl():
     def save(self,teacher : Teacher) -> None:
         sql = "INSERT INTO Teacher (Email, Username,Password) VALUES (%s, %s, %s)"
         val  = (teacher.Email,teacher.Username,teacher.Password)
-        self.cursor.execute(sql, val)
-        self.db.commit()
+        self.cursor.execute(sql, val) #เอาsqlกับvalมาเชื่อมกันผ่าน%s
+        self.db.commit()#insert,delete,updateต้องมีการcommitเพื่อยืนยันการเปลี่ยนแปลงข้อมูล
 
     
     def findAll(self) -> list:
@@ -36,7 +36,7 @@ class TeacherDAOImpl():
         self.db.commit()
     def find(self,email)-> Teacher:
         self.cursor.execute(f'SELECT * FROM Teacher where Email = "{email}"')
-        teacher = self.cursor.fetchone()
+        teacher = self.cursor.fetchone()#เอาข้อมูลมาตัวเดียว
         if teacher:
             return Teacher(Email=teacher[0],Username=teacher[1],Password= teacher[2])
         return None
