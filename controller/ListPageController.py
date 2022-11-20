@@ -59,7 +59,7 @@ class ListPageController(BaseController):
         self.classroomDAO.delete(Classroom(ClassID=classId,Name=None,TeacherEmail=None))
 
         context = Context()
-        tEmail = context.get_email()
+        tEmail = context.get_email()#เอาemailมาจากContext
 
         data = self.classroomDAO.findAllFromTeacherEmail(tEmail)
         self.request.update({"classroom" : data})
