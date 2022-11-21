@@ -65,7 +65,7 @@ class CreatePage(BasePage):
         self.semi_topframe_extend.grid(row = 0, column=1)
 
         self.classroom_name = StringVar()
-        self.classroom_name.trace("w", lambda name, index, mode, sv=self.classroom_name: self.find_class())
+        self.classroom_name.trace("w", lambda name, index, mode, sv=self.classroom_name: self.find_class())#ถ้ามีตัวอักษรพิมพ์ไปให้ใช้self.find_class
 
         self.classname = Entry(self.semi_topframe_extend, font= "Inter 15 bold",bg= "#DBC2AB",width=55,textvariable=self.classroom_name)
 
@@ -95,8 +95,8 @@ class CreatePage(BasePage):
                                    font=('Arial',16))
                  
         self.e.pack(side=LEFT)
-        self.e.insert(END, "รหัสนักศึกษา")
-        self.e.configure(state='readonly',readonlybackground="#DBC2AB")
+        self.e.insert(END, "รหัสนักศึกษา")#ใส่ชื่อในช่องนั้น
+        self.e.configure(state='readonly',readonlybackground="#DBC2AB")#read only
         self.e = Entry(self.upper_canvas, width=45, fg='black',bg="#DBC2AB",highlightbackground="black",highlightthickness=1,
                                    font=('Arial',16))
                  
@@ -110,7 +110,7 @@ class CreatePage(BasePage):
         self.scrollbar = Scrollbar(self.viewbar, orient="vertical", command=self.canvas.yview)
         self.scrollable_frame = Frame(self.canvas)
 
-        self.scrollable_frame.bind(
+        self.scrollable_frame.bind(#กำหนดความสามารถพิเศษ frameที่เลื่อนขึ้นเลื่อนลงได้
             "<Configure>",
             lambda e: self.canvas.configure(
                 scrollregion=self.canvas.bbox("all")
@@ -122,7 +122,7 @@ class CreatePage(BasePage):
         self.entryLst = []
 
         sv = StringVar()
-        sv.trace("w", lambda name, index, mode, sv=sv: self.callback())
+        sv.trace("w", lambda name, index, mode, sv=sv: self.callback())#เขียนค่า,callbackขึ้นบรรทัดใหม่
 
         self.e1 = Entry(self.scrollable_frame, width=20, fg='black',bg="#DBC2AB",highlightbackground="black",highlightthickness=1,
                                    font=('Arial',16),textvariable=sv)
@@ -204,10 +204,6 @@ class CreatePage(BasePage):
         self.entryLst.append([self.e1,self.e2])
 
 
-
-    def changePage(self):
-        if (self.controller):
-            self.controller.buttonclick("Hello")
 
     def callback(self):
         data = self.entryLst[len(self.entryLst) - 1]

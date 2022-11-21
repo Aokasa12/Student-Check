@@ -7,8 +7,8 @@ from model.Classroom import Classroom
 
 class ClassroomDAOImpl():
     def __init__(self) -> None:
-       self.cursor = Database().get_cursor()
-       self.db = Database().get_database()
+       self.cursor = Database().get_cursor()#เป็นตัวจัดการsql
+       self.db = Database().get_database()#ยืนยันการเปลี่ยนแปลงข้อมูลของDatabase
 
     def save(self,classroom : Classroom) -> None:
         sql = "INSERT INTO Classroom (Name,TeacherEmail) VALUES (%s, %s)"
@@ -43,7 +43,7 @@ class ClassroomDAOImpl():
         return None
     
     def findFromNameAndEmail(self,classroom : Classroom)-> Classroom:
-        self.cursor.execute(f'SELECT * FROM Classroom where Name = "{classroom.Name}" and TeacherEmail = "{classroom.TeacherEmail}" ORDER BY ClassID DESC')
+        self.cursor.execute(f'SELECT * FROM Classroom where Name = "{classroom.Name}" and TeacherEmail = "{classroom.TeacherEmail}" ORDER BY ClassID DESC')#ตอนเลือกมาให้อิงคลาสไอดีจากมากไปหาน้อย
         classroom = self.cursor.fetchone()
         if classroom:
             return Classroom(ClassID=classroom[0],Name=classroom[1],TeacherEmail=classroom[2])

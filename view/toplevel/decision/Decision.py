@@ -13,7 +13,7 @@ class Decision(Toplevel): #หน้ารอง
         self.title('Toplevel Window')
         self.configure(bg = "#F4E8DA")
         self.mode = IntVar()#ตัวเก็บint ใช้กับTkinter
-        self.mode.set(0)
+        self.mode.set(0)#set intvarให้เป็น0
         self.canvas = Canvas(
             self,
             bg = "#F4E8DA",
@@ -66,7 +66,7 @@ class Decision(Toplevel): #หน้ารอง
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.changeMode(1),
+            command=lambda: self.changeMode(1),#lambdaเอาไว้ส่งตัวแปล
             relief="flat"
         )
         self.button_2.place(
