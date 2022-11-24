@@ -14,7 +14,7 @@ class Application(tk.Tk):
         self.protocol('WM_DELETE_WINDOW', exit)
         Database()
         Navigation().initialization(self)
-        Navigation().navigate(FrontPage,FrontPageController,request=dict())
+        Navigation().navigate(FrontPage,FrontPageController)
 
 
     def exit(self):
